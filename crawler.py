@@ -77,7 +77,7 @@ class Crawler():
         
         #query_param 생성
         query_params = { 'start_time' : start_str ,'end_time' : end_str,'query': query,'expansions':'author_id', 
-    'tweet.fields': 'author_id,created_at','user.fields': 'username','max_results' : 20}
+    'tweet.fields': 'author_id,created_at','user.fields': 'username','max_results' : 100}
 
         #생성된 query_param 으로 api 호출
         json_response = self.connect_to_endpoint(self.search_url, query_params)
@@ -114,7 +114,7 @@ class Crawler():
             self.printProgress(i, total, 'Progress:', 'Complete', 1, 50)
         return dataFrame
 
-    def run(self) :
+    def run(self, table_name) :
         print(self.start , "와" , self.end, "사이에 생성된 트윗들을\n", self.period, "간격으로 크롤링합니다")
         df = self.search_period(self.start,self.end,self.period,self.api_query)
         print("총 ", len(df.index), "개의 트윗이 dataframe에 저장되었습니다")
@@ -126,7 +126,7 @@ class Crawler():
             db_connection = create_engine(db_connection_str)
             conn = db_connection.connect()
             #conn,cursor = self.connect_to_db()
-            df.to_sql(name='collect_tweet', con=db_connection, if_exists='replace',index=False)  
+            df.to_sql(name=table_name, con=db_connection, if_exists='replace',index=False)  
 
         else:
             print("ㄴㄴ")

@@ -12,7 +12,7 @@ def main () :
     period = datetime.timedelta(hours=1)
 
     crawler = Crawler(api_query,start,end,period)
-    df = crawler.run()
+    df = crawler.run("tweet_food")
    
     
 
