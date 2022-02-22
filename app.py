@@ -13,8 +13,6 @@ def main () :
 
     crawler = Crawler(api_query,start,end,period)
     df = crawler.run("tweet_food")
-    print(11111)
-   
     
 
 
